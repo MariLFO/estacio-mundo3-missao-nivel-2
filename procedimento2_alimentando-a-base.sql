@@ -3,11 +3,11 @@ USE [loja]
 GO
 
 
--- Declara vari·vel que ser· utilizada multiplas vezes no cÛdigo abaixo:
+-- Declara vari√°vel que ser√° utilizada multiplas vezes no c√≥digo abaixo:
 DECLARE @idPessoa INT;
 
 
--- Insere usu·rios:
+-- Insere usu√°rios:
 INSERT INTO Usuario
 	([login],[senha])
      VALUES ('op1', 'op1'), ('op2', 'op2')
@@ -22,8 +22,7 @@ VALUES ('Banana', 100, 5.0),
 GO
 
 
--- Insere pessoa fÌsica:
-DECLARE @idPessoa INT;
+-- Insere pessoa f√≠sica:
 SET @idPessoa = NEXT VALUE FOR dbo.PessoaSequence;
 
 INSERT INTO Pessoa (idPessoa, nome, logradouro, cidade, estado, telefone, email)
@@ -43,7 +42,7 @@ INSERT INTO PessoaJuridica (idPessoa, CNPJ)
 VALUES (@idPessoa, '22222222222222');
 
 
--- Insere movimentaÁıes:
+-- Insere movimenta√ß√µes:
 INSERT INTO Movimento (Usuario_idUsuario, Pessoa_idPessoa, Produto_idProduto, quantidade, tipo, valorUnitario)
 VALUES (1, 1, 1, 20, 'S', 4.00),
        (1, 1, 2, 15, 'S', 2.00),
@@ -52,22 +51,22 @@ VALUES (1, 1, 1, 20, 'S', 4.00),
        (1, 2, 3, 20, 'E', 4.00);
 	   
 
--- Lista usu·rios:
+-- Lista usu√°rios:
 SELECT * FROM Usuario
 GO
 
 
--- Lista dados completos de pessoas fÌsicas:
+-- Lista dados completos de pessoas f√≠sicas:
 SELECT * FROM Pessoa p JOIN PessoaFisica pf ON p.idPessoa = pf.idPessoa;
 GO
 
 
--- Lista dados completos de pessoas jurÌdicas:
+-- Lista dados completos de pessoas jur√≠dicas:
 SELECT * FROM Pessoa p JOIN PessoaJuridica pj ON p.idPessoa = pj.idPessoa;
 GO
 
 
--- Lista movimentaÁıes de entrada, com produto, fornecedor, quantidade, preÁo unit·rio e valor total:
+-- Lista movimenta√ß√µes de entrada, com produto, fornecedor, quantidade, pre√ßo unit√°rio e valor total:
 SELECT Produto.nome AS produto,
        Pessoa.nome AS fornecedor,
        Movimento.quantidade,
@@ -80,7 +79,7 @@ WHERE tipo = 'E';
 GO
 
 
--- Lista movimentaÁıes de saÌda, com produto, comprador, quantidade, preÁo unit·rio e valor total:
+-- Lista movimenta√ß√µes de sa√≠da, com produto, comprador, quantidade, pre√ßo unit√°rio e valor total:
 SELECT Produto.nome AS produto,
        Pessoa.nome AS comprador,
        Movimento.quantidade,
@@ -103,7 +102,7 @@ GROUP BY Produto.nome;
 GO
 
 
--- Lista valor total das saÌdas agrupadas por produto:
+-- Lista valor total das sa√≠das agrupadas por produto:
 SELECT Produto.nome AS produto,
        SUM(Movimento.quantidade * Movimento.valorUnitario) AS "valor total saidas"
 FROM Movimento
@@ -113,7 +112,7 @@ GROUP BY Produto.nome;
 GO
 
 
--- Lista operadores que n„o efetuaram movimentaÁıes de entrada (compra):
+-- Lista operadores que n√£o efetuaram movimenta√ß√µes de entrada (compra):
 SELECT Usuario.login AS "operador sem compra"
 FROM Usuario
 	LEFT JOIN (SELECT DISTINCT Usuario_idUsuario FROM Movimento WHERE tipo = 'E') m ON Usuario.idUsuario = m.Usuario_idUsuario
@@ -129,7 +128,7 @@ WHERE tipo = 'E'
 GROUP BY Usuario.login;
 
 
--- Lista valor total de saÌda, agrupado por operador:
+-- Lista valor total de sa√≠da, agrupado por operador:
 SELECT Usuario.login AS operador,
        SUM(Movimento.quantidade * Movimento.valorUnitario) AS "valor total saidas"
 FROM Movimento
@@ -139,7 +138,7 @@ GROUP BY Usuario.login;
 GO
 
 
--- Lista valor mÈdio de venda por produto, utilizando mÈdia ponderada:
+-- Lista valor m√©dio de venda por produto, utilizando m√©dia ponderada:
 WITH VendasPorProduto AS (
   SELECT Produto_idProduto,
          SUM(quantidade * valorUnitario) / SUM(quantidade) AS valorMedioVendaPorProduto
