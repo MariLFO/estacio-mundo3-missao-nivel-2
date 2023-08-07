@@ -3,7 +3,7 @@ USE [loja]
 GO
 
 
--- Declara variável que será utilizada múltiplas vezes no código abaixo:
+-- Declara variável que será utilizada multiplas vezes no código abaixo:
 DECLARE @idPessoa INT;
 
 
@@ -23,7 +23,6 @@ GO
 
 
 -- Insere pessoa física:
-DECLARE @idPessoa INT;
 SET @idPessoa = NEXT VALUE FOR dbo.PessoaSequence;
 
 INSERT INTO Pessoa (idPessoa, nome, logradouro, cidade, estado, telefone, email)
@@ -67,7 +66,7 @@ SELECT * FROM Pessoa p JOIN PessoaJuridica pj ON p.idPessoa = pj.idPessoa;
 GO
 
 
--- Lista movimentações  de entrada, com produto, fornecedor, quantidade, preço unitário e valor total:
+-- Lista movimentações de entrada, com produto, fornecedor, quantidade, preço unitário e valor total:
 SELECT Produto.nome AS produto,
        Pessoa.nome AS fornecedor,
        Movimento.quantidade,
@@ -103,7 +102,7 @@ GROUP BY Produto.nome;
 GO
 
 
--- Lista valor total das saídas  agrupadas por produto:
+-- Lista valor total das saídas agrupadas por produto:
 SELECT Produto.nome AS produto,
        SUM(Movimento.quantidade * Movimento.valorUnitario) AS "valor total saidas"
 FROM Movimento
